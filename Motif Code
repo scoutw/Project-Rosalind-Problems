@@ -1,0 +1,23 @@
+import java.util.Scanner;
+    public class main{
+        public static void main (String [] args) {
+        Scanner sc = new Scanner (System.in);
+        
+        String s = "GATATATGCATATACTT";
+        String t = "ATAT";
+    
+        
+        int sLength = s.length ();
+        int tLength = t.length ();
+        
+        for (int i = 0; i <= sLength - tLength; i++) {
+        
+            String sub = s.substring (i, i + tLength);
+            
+            if (sub.equals (t)){
+                
+                System.out.print ((i+1) + " ");
+            }
+        }
+    }
+}
