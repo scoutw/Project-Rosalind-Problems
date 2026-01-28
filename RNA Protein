@@ -1,0 +1,46 @@
+import java.util.Scanner;
+
+public class TranslatingRNA {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        String rna = "AUGGCCAUGGCGCCCAGAACUGAGAUCAAUAGUACCCGUAUUAACGGGUGA";
+
+       
+        for (int i = 0; i < rna.length(); i += 3) {
+
+            String codon = rna.substring(i, i + 3); //1I think, because 3 letters in codon?
+
+            if (codon.equals("UAA") || codon.equals("UAG") || codon.equals("UGA")) {
+                break;
+            }
+
+            if (codon.equals("AUG")) System.out.print("M");
+            else if (codon.equals("UUU") || codon.equals("UUC")) System.out.print("F");
+            else if (codon.equals("UUA") || codon.equals("UUG")) System.out.print("L");
+            else if (codon.equals("UCU") || codon.equals("UCC") || codon.equals("UCA") || codon.equals("UCG")) System.out.print("S");
+            else if (codon.equals("UAU") || codon.equals("UAC")) System.out.print("Y");
+            else if (codon.equals("UGU") || codon.equals("UGC")) System.out.print("C");
+            else if (codon.equals("UGG")) System.out.print("W");
+            else if (codon.equals("CUU") || codon.equals("CUC") || codon.equals("CUA") || codon.equals("CUG")) System.out.print("L");
+            else if (codon.equals("CCU") || codon.equals("CCC") || codon.equals("CCA") || codon.equals("CCG")) System.out.print("P");
+            else if (codon.equals("CAU") || codon.equals("CAC")) System.out.print("H");
+            else if (codon.equals("CAA") || codon.equals("CAG")) System.out.print("Q");
+            else if (codon.equals("CGU") || codon.equals("CGC") || codon.equals("CGA") || codon.equals("CGG")) System.out.print("R");
+            else if (codon.equals("AUU") || codon.equals("AUC") || codon.equals("AUA")) System.out.print("I");
+            else if (codon.equals("ACU") || codon.equals("ACC") || codon.equals("ACA") || codon.equals("ACG")) System.out.print("T");
+            else if (codon.equals("AAU") || codon.equals("AAC")) System.out.print("N");
+            else if (codon.equals("AAA") || codon.equals("AAG")) System.out.print("K");
+            else if (codon.equals("AGU") || codon.equals("AGC")) System.out.print("S");
+            else if (codon.equals("AGA") || codon.equals("AGG")) System.out.print("R");
+            else if (codon.equals("GUU") || codon.equals("GUC") || codon.equals("GUA") || codon.equals("GUG")) System.out.print("V");
+            else if (codon.equals("GCU") || codon.equals("GCC") || codon.equals("GCA") || codon.equals("GCG")) System.out.print("A");
+            else if (codon.equals("GAU") || codon.equals("GAC")) System.out.print("D");
+            else if (codon.equals("GAA") || codon.equals("GAG")) System.out.print("E");
+            else if (codon.equals("GGU") || codon.equals("GGC") || codon.equals("GGA") || codon.equals("GGG")) System.out.print("G");
+        }
+     
+    }
+}
