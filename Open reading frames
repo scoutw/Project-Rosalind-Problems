@@ -1,0 +1,86 @@
+public class RosalindORF {
+
+    // Read FASTA file
+    public static String readFasta(String filename) throws Exception {
+        BufferedReader br = new BufferedReader(new FileReader(filename));
+        String line;
+        String sequence = "";
+
+        while ((line = br.readLine()) != null) {
+            if (!line.startsWith(">")) {
+                sequence += line.trim();
+            }
+        }
+
+        br.close();
+        return sequence;
+    }
+
+    // Translate one codon
+    public static char coding(String s) {
+
+        if (s.equals("TTT") || s.equals("TTC")) return 'F';
+        else if (s.equals("TTA") || s.equals("TTG") || s.equals("CTT") || s.equals("CTC") || s.equals("CTA") || s.equals("CTG")) return 'L';
+        else if (s.equals("TCT") || s.equals("TCC") || s.equals("TCA") || s.equals("TCG") || s.equals("AGT") || s.equals("AGC")) return 'S';
+        else if (s.equals("TAT") || s.equals("TAC")) return 'Y';
+        else if (s.equals("TGT") || s.equals("TGC")) return 'C';
+        else if (s.equals("TGG")) return 'W';
+        else if (s.equals("CCT") || s.equals("CCC") || s.equals("CCA") || s.equals("CCG")) return 'P';
+        else if (s.equals("CAT") || s.equals("CAC")) return 'H';
+        else if (s.equals("CAA") || s.equals("CAG")) return 'Q';
+        else if (s.equals("CGT") || s.equals("CGC") || s.equals("CGA") || s.equals("CGG") || s.equals("AGA") || s.equals("AGG")) return 'R';
+        else if (s.equals("ATT") || s.equals("ATC") || s.equals("ATA")) return 'I';
+        else if (s.equals("ATG")) return 'M';
+        else if (s.equals("ACT") || s.equals("ACC") || s.equals("ACA") || s.equals("ACG")) return 'T';
+        else if (s.equals("AAT") || s.equals("AAC")) return 'N';
+        else if (s.equals("AAA") || s.equals("AAG")) return 'K';
+        else if (s.equals("GTT") || s.equals("GTC") || s.equals("GTA") || s.equals("GTG")) return 'V';
+        else if (s.equals("GCT") || s.equals("GCC") || s.equals("GCA") || s.equals("GCG")) return 'A';
+        else if (s.equals("GAT") || s.equals("GAC")) return 'D';
+        else if (s.equals("GAA") || s.equals("GAG")) return 'E';
+        else if (s.equals("GGT") || s.equals("GGC") || s.equals("GGA") || s.equals("GGG")) return 'G';
+        else if (s.equals("TAA") || s.equals("TAG") || s.equals("TGA")) return '~'; // stop
+        else return '?';
+    }
+
+    // Reverse complement
+    public static String reverseComplement(String s) {
+        String result = "";
+
+        for (int i = s.length() - 1; i >= 0; i--) {
+            char c = s.charAt(i);
+
+            if (c == 'A') result += 'T';
+            else if (c == 'T') result += 'A';
+            else if (c == 'G') result += 'C';
+            else if (c == 'C') result += 'G';
+        }
+
+        return result;
+  
+
+    // Find proteins in one sequence
+    public static List<String> findProteins(String sequence) {
+        List<String> proteins = new ArrayList<>();
+
+        for (int frame = 0; frame < 3; frame++) {
+
+            String translated = "";
+
+            for (int i = frame; i <= sequence.length() - 3; i += 3) {
+                String codon = sequence.substring(i, i + 3);
+                translated += coding(codon);
+            }
+
+            for (int i = 0; i < translated.length(); i++) {
+                if (translated.charAt(i) == 'M') {
+                    int stop = translated.indexOf('~', i);
+                    if (stop != -1) {
+                        proteins.add(translated.substring(i, stop));
+                    }
+                }
+            }
+        }
+
+        return proteins;
+    }
