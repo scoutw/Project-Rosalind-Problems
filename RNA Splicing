@@ -1,0 +1,84 @@
+
+public class RNAsplicing {
+
+    // Genetic codon table
+    public static Map<String, String> createCodonTable() {
+        Map<String, String> codonTable = new HashMap<>();
+
+        codonTable.put("TTT", "F"); codonTable.put("TTC", "F");
+        codonTable.put("TTA", "L"); codonTable.put("TTG", "L");
+        codonTable.put("CTT", "L"); codonTable.put("CTC", "L");
+        codonTable.put("CTA", "L"); codonTable.put("CTG", "L");
+
+        codonTable.put("ATT", "I"); codonTable.put("ATC", "I");
+        codonTable.put("ATA", "I"); codonTable.put("ATG", "M");
+
+        codonTable.put("GTT", "V"); codonTable.put("GTC", "V");
+        codonTable.put("GTA", "V"); codonTable.put("GTG", "V");
+
+        codonTable.put("TCT", "S"); codonTable.put("TCC", "S");
+        codonTable.put("TCA", "S"); codonTable.put("TCG", "S");
+        codonTable.put("AGT", "S"); codonTable.put("AGC", "S");
+
+        codonTable.put("CCT", "P"); codonTable.put("CCC", "P");
+        codonTable.put("CCA", "P"); codonTable.put("CCG", "P");
+
+        codonTable.put("ACT", "T"); codonTable.put("ACC", "T");
+        codonTable.put("ACA", "T"); codonTable.put("ACG", "T");
+
+        codonTable.put("GCT", "A"); codonTable.put("GCC", "A");
+        codonTable.put("GCA", "A"); codonTable.put("GCG", "A");
+
+        codonTable.put("TAT", "Y"); codonTable.put("TAC", "Y");
+
+        codonTable.put("CAT", "H"); codonTable.put("CAC", "H");
+        codonTable.put("CAA", "Q"); codonTable.put("CAG", "Q");
+
+        codonTable.put("AAT", "N"); codonTable.put("AAC", "N");
+        codonTable.put("AAA", "K"); codonTable.put("AAG", "K");
+
+        codonTable.put("GAT", "D"); codonTable.put("GAC", "D");
+        codonTable.put("GAA", "E"); codonTable.put("GAG", "E");
+
+        codonTable.put("TGT", "C"); codonTable.put("TGC", "C");
+        codonTable.put("TGG", "W");
+
+        codonTable.put("CGT", "R"); codonTable.put("CGC", "R");
+        codonTable.put("CGA", "R"); codonTable.put("CGG", "R");
+        codonTable.put("AGA", "R"); codonTable.put("AGG", "R");
+
+        codonTable.put("GGT", "G"); codonTable.put("GGC", "G");
+        codonTable.put("GGA", "G"); codonTable.put("GGG", "G");
+
+        // Stop codons
+        codonTable.put("TAA", "STOP");
+        codonTable.put("TAG", "STOP");
+        codonTable.put("TGA", "STOP");
+
+        return codonTable;
+    }
+
+    public static String spliceAndTranslate(String dna, List<String> introns) {
+
+        // Remove introns
+        for (String intron : introns) {
+            dna = dna.replace(intron, "");
+        }
+
+        Map<String, String> codonTable = createCodonTable();
+        StringBuilder protein = new StringBuilder();
+      
+        for (int i = 0; i <= dna.length() - 3; i += 3) {
+            String codon = dna.substring(i, i + 3);
+            String aminoAcid = codonTable.get(codon);
+
+            if (aminoAcid == null) break;   // safety check
+            if (aminoAcid.equals("STOP")) break;
+
+            protein.append(aminoAcid);
+        }
+
+        return protein.toString();
+    }
+
+   
